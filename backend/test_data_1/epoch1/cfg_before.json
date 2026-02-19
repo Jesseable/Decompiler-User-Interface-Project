@@ -1,20 +1,75 @@
 {
-  "main": {
+    "main": {
+        "nodes": [
+            { "id": "main_entry", "label": "block %main_entry [\n  $R0 := 0x1000\n  $R1 := bvadd($R0, 0x4)\n]", "isEntry": true },
+            { "id": "main_return", "label": "block %main_return [\n  return ()\n]", "isEntry": false }
+        ],
+        "edges": [
+            { "id": "e-main_entry-main_return-0", "source": "main_entry", "target": "main_return", "label": null }
+        ]
+    },
+    "large_data": {
     "nodes": [
-      { "id": "main_entry", "label": "block %main_entry [\n  $R0 := 0x1000\n  $R1 := bvadd($R0, 0x4)\n]", "isEntry": true },
-      { "id": "main_return", "label": "block %main_return [\n  return ()\n]", "isEntry": false }
+        {
+        "id": "large_data_entry",
+        "label": "block %large_data_entry {.address = 0x650} [\n  var R30_begin_large_data_1616: bv64 := $R30:bv64;\n  $R0: bv64 := 0x11000:bv64;\n  $R0: bv64 := bvadd($R0:bv64, 0x10:bv64);\n  $R1: bv64 := 0x11000:bv64;\n  $R1: bv64 := bvadd($R1:bv64, 0x10:bv64);\n  var #1: bv64 := bvnot($R0:bv64);\n  var #2: bv64 := bvadd($R1:bv64, bvnot($R0:bv64));\n  $VF: bv1 := ...;\n  $CF: bv1 := ...;\n  $ZF: bv1 := ...;\n  $NF: bv1 := ...;\n  goto(%large_data_5, %large_data_15);\n]",
+        "isEntry": true
+        },
+        {
+        "id": "large_data_3",
+        "label": "block %large_data_3 {.address = 0x67c} [\n  assert eq($R30:bv64, R30_begin_large_data_1616:bv64);\n  goto(%large_data_basil_return_1);\n]",
+        "isEntry": false
+        },
+        {
+        "id": "large_data_5",
+        "label": "block %large_data_5 [\n  guard neq(bvcomp($ZF:bv1, 0x1:bv1), 0x0:bv1);\n  goto(%large_data_3);\n]",
+        "isEntry": false
+        },
+        {
+        "id": "large_data_7",
+        "label": "block %large_data_7 [\n  guard neq(bvcomp($R1:bv64, 0x0:bv64), 0x0:bv1);\n  goto(%large_data_3);\n]",
+        "isEntry": false
+        },
+        {
+        "id": "large_data_11",
+        "label": "block %large_data_11 [\n  guard eq(bvcomp($R1:bv64, 0x0:bv64), 0x0:bv1);\n  $R16: bv64 := $R1:bv64;\n  assert eq($R30:bv64, R30_begin_large_data_1616:bv64);\n  indirect call $R16:bv64;\n  goto(%large_data_basil_return_1);\n]",
+        "isEntry": false
+        },
+        {
+        "id": "large_data_13",
+        "label": "block %large_data_13 {.address = 0x668} [\n  goto(%large_data_7, %large_data_11);\n]",
+        "isEntry": false
+        },
+        {
+        "id": "large_data_15",
+        "label": "block %large_data_15 [\n  guard eq(bvcomp($ZF:bv1, 0x1:bv1), 0x0:bv1);\n  $R1: bv64 := 0x10000:bv64;\n  var load17: bv64 := load le $mem bvadd($R1:bv64, 0xfd8:bv64) 64;\n  $R1: bv64 := load17:bv64;\n  goto(%large_data_13);\n]",
+        "isEntry": false
+        },
+        {
+        "id": "large_data_basil_return_1",
+        "label": "block %large_data_basil_return_1 [\n  return ();\n]",
+        "isEntry": false
+        }
     ],
     "edges": [
-      { "id": "e-main_entry-main_return-0", "source": "main_entry", "target": "main_return", "label": null }
+        { "id": "e-large_data_entry-large_data_5-0", "source": "large_data_entry", "target": "large_data_5", "label": null },
+        { "id": "e-large_data_entry-large_data_15-1", "source": "large_data_entry", "target": "large_data_15", "label": null },
+        { "id": "e-large_data_3-large_data_basil_return_1-2", "source": "large_data_3", "target": "large_data_basil_return_1", "label": null },
+        { "id": "e-large_data_5-large_data_3-3", "source": "large_data_5", "target": "large_data_3", "label": null },
+        { "id": "e-large_data_7-large_data_3-4", "source": "large_data_7", "target": "large_data_3", "label": null },
+        { "id": "e-large_data_11-large_data_basil_return_1-5", "source": "large_data_11", "target": "large_data_basil_return_1", "label": null },
+        { "id": "e-large_data_13-large_data_7-6", "source": "large_data_13", "target": "large_data_7", "label": null },
+        { "id": "e-large_data_13-large_data_11-7", "source": "large_data_13", "target": "large_data_11", "label": null },
+        { "id": "e-large_data_15-large_data_13-8", "source": "large_data_15", "target": "large_data_13", "label": null }
     ]
-  },
-  "helper": {
-    "nodes": [
-      { "id": "helper_entry", "label": "block %helper_entry [\n  ...\n]", "isEntry": true },
-      { "id": "helper_return", "label": "block %helper_return [\n  return ()\n]", "isEntry": false }
-    ],
-    "edges": [
-      { "id": "e-helper_entry-helper_return-0", "source": "helper_entry", "target": "helper_return", "label": null }
-    ]
-  }
+    },
+    "no_change": {
+        "nodes": [
+            { "id": "no_change_entry", "label": "block %no_change_entry [\n  $R0 := 0x1000\n  $R1 := bvadd($R0, 0x4)\n]", "isEntry": true },
+            { "id": "no_change_return", "label": "block %no_change_entry [\n  $R0 := 0x1000\n  $R1 := bvadd($R0, 0x4)\n]", "isEntry": false }
+        ],
+        "edges": [
+            { "id": "e-no_change_entry-no_change_return-0", "source": "no_change_entry", "target": "no_change_return", "label": null }
+        ]
+    }
 }

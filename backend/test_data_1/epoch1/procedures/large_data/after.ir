@@ -1,0 +1,75 @@
+proc @large_data_1664
+  (R0_in:bv64, R10_in:bv64, R11_in:bv64, R12_in:bv64, R13_in:bv64, R14_in:bv64, R15_in:bv64, R16_in:bv64, R17_in:bv64, R18_in:bv64, R1_in:bv64, R29_in:bv64, R2_in:bv64, R30_in:bv64, R31_in:bv64, R3_in:bv64, R4_in:bv64, R5_in:bv64, R6_in:bv64, R7_in:bv64, R8_in:bv64, R9_in:bv64, _PC_in:bv64)
+    -> (R0_out:bv64, R10_out:bv64, R11_out:bv64, R12_out:bv64, R13_out:bv64, R14_out:bv64, R15_out:bv64, R16_out:bv64, R17_out:bv64, R18_out:bv64, R1_out:bv64, R29_out:bv64, R2_out:bv64, R30_out:bv64, R31_out:bv64, R3_out:bv64, R4_out:bv64, R5_out:bv64, R6_out:bv64, R7_out:bv64, R8_out:bv64, R9_out:bv64, _PC_out:bv64)
+  { .name = "large_data"; .address = 0x680; .returnBlock = "large_data_return" }
+[
+  block %large_data_entry {.address = 0x680} [
+    var R0: bv64 := R0_in:bv64;
+    var R10: bv64 := R10_in:bv64;
+    var R11: bv64 := R11_in:bv64;
+    var R12: bv64 := R12_in:bv64;
+    var R13: bv64 := R13_in:bv64;
+    var R14: bv64 := R14_in:bv64;
+    var R15: bv64 := R15_in:bv64;
+    var R16: bv64 := R16_in:bv64;
+    var R17: bv64 := R17_in:bv64;
+    var R18: bv64 := R18_in:bv64;
+    var R1: bv64 := R1_in:bv64;
+    var R29: bv64 := R29_in:bv64;
+    var R2: bv64 := R2_in:bv64;
+    var R30: bv64 := R30_in:bv64;
+    var R31: bv64 := R31_in:bv64;
+    var R3: bv64 := R3_in:bv64;
+    var R4: bv64 := R4_in:bv64;
+    var R5: bv64 := R5_in:bv64;
+    var R6: bv64 := R6_in:bv64;
+    var R7: bv64 := R7_in:bv64;
+    var R8: bv64 := R8_in:bv64;
+    var R9: bv64 := R9_in:bv64;
+    var _PC: bv64 := _PC_in:bv64;
+    var R30_begin_large_data_1664: bv64 := R30:bv64;
+    var R0: bv64 := 0x11000:bv64 { .label = "%00000283" };
+    var R0: bv64 := bvadd(R0:bv64, 0x10:bv64) { .label = "%00000289" };
+    var R1: bv64 := 0x11000:bv64 { .label = "%0000028e" };
+    var R1: bv64 := bvadd(R1:bv64, 0x10:bv64) { .label = "%00000294" };
+    var R1: bv64 := bvadd(bvadd(R1:bv64, bvnot(R0:bv64)), 0x1:bv64) { .label = "%0000029b" };
+    var R2: bv64 := bvconcat(0x0:bv63, extract(64, 63, R1:bv64)) { .label = "%000002a1" };
+    var R1: bv64 := bvadd(R2:bv64, bvashr(R1:bv64, zero_extend(61, 0x3:bv3))) { .label = "%000002a8" };
+    var R1: bv64 := sign_extend(1, extract(64, 1, R1:bv64)) { .label = "%000002ae" };
+    goto(%large_data_6, %large_data_14);
+  ];
+  block %large_data_4 {.address = 0x6b8} [
+    assert eq(R30:bv64, R30_begin_large_data_1664:bv64) { .comment = "is returning to caller-set R30" };
+    goto(%large_data_return);
+  ];
+  block %large_data_6 [
+    guard neq(bvcomp(R1:bv64, 0x0:bv64), 0x0:bv1);
+    goto(%large_data_4);
+  ];
+  block %large_data_8 [
+    guard neq(bvcomp(R2:bv64, 0x0:bv64), 0x0:bv1);
+    goto(%large_data_4);
+  ];
+  block %large_data_10 [
+    guard eq(bvcomp(R2:bv64, 0x0:bv64), 0x0:bv1);
+    var R16: bv64 := R2:bv64 { .label = "%00000415" };
+    assert eq(R30:bv64, R30_begin_large_data_1664:bv64) { .comment = "R30 = R30_in" };
+    var indirectCallTarget: bv64 := R16:bv64;
+    var (R0:bv64, R10:bv64, R11:bv64, R12:bv64, R13:bv64, R14:bv64, R15:bv64, R16:bv64, R17:bv64, R18:bv64, R1:bv64, R29:bv64, R2:bv64, R30:bv64, R31:bv64, R3:bv64, R4:bv64, R5:bv64, R6:bv64, R7:bv64, R8:bv64, R9:bv64)
+        := call @indirect_call_launchpad (R0:bv64, R10:bv64, R11:bv64, R12:bv64, R13:bv64, R14:bv64, R15:bv64, R16:bv64, R17:bv64, R18:bv64, R1:bv64, R29:bv64, R2:bv64, R30:bv64, R31:bv64, R3:bv64, R4:bv64, R5:bv64, R6:bv64, R7:bv64, R8:bv64, R9:bv64, indirectCallTarget:bv64);
+    goto(%large_data_return);
+  ];
+  block %large_data_12 {.address = 0x6a4} [
+    goto(%large_data_8, %large_data_10);
+  ];
+  block %large_data_14 [
+    guard eq(bvcomp(R1:bv64, 0x0:bv64), 0x0:bv1);
+    var R2: bv64 := 0x10000:bv64 { .label = "%00000401" };
+    var load21: bv64 := load le $mem bvadd(R2:bv64, 0xff8:bv64) 64 { .label = "%00000408$0" };
+    var R2: bv64 := load21:bv64 { .label = "%00000408$1" };
+    goto(%large_data_12);
+  ];
+  block %large_data_return [
+    return (R0:bv64, R10:bv64, R11:bv64, R12:bv64, R13:bv64, R14:bv64, R15:bv64, R16:bv64, R17:bv64, R18:bv64, R1:bv64, R29:bv64, R2:bv64, R30:bv64, R31:bv64, R3:bv64, R4:bv64, R5:bv64, R6:bv64, R7:bv64, R8:bv64, R9:bv64, _PC:bv64);
+  ]
+];
