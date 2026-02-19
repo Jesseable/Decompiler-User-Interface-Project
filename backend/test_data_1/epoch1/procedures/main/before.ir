@@ -1,0 +1,18 @@
+memory shared $mem : (bv64 -> bv8);
+var $R0: bv64;
+var $R1: bv64;
+
+prog entry @main;
+
+proc @main () -> ()
+[
+  block %main_entry [
+    $R0: bv64 := 0x1000:bv64;
+    $R1: bv64 := bvadd($R0:bv64, 0x4:bv64);
+    goto(%main_return);
+  ];
+
+  block %main_return [
+    return ();
+  ];
+]
