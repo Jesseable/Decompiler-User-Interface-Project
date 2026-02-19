@@ -36,6 +36,33 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
+Once the backend is running, you must load a valid configuration directory.
+
+Two example datasets are provided:
+- backend/test_data_1
+- backend/test_data_2
+
+You must provide the absolute path to one of these directories.
+
+#### Option 1 - Using the interface
+1. Click the **Configuration** button in the left-hand sidebar.
+2. Enter the **absolute path** to one of the test data directories.
+3. Confirm the selection to trigger the analysis.
+
+![Configeration Selection Demo](assets/config-example.gif) 
+
+Once selected, the backend will begin processing and report its readiness via the `/status` endpoint.
+
+#### Option 2 - Using curl
+```bash
+curl -X POST http://127.0.0.1:8000/config/select-directory \
+  -H "Content-Type: application/json" \
+  -d '{"directoryPath":"/Users/{USR_PATH}/Decompiler-User-Interface-Project/backend/test_data_1"}'
+```
+If successful, the backend will respond:
+```
+{"message":"Analysis triggered"}
+```
 
 ### Frontend
 ```bash
