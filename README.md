@@ -12,7 +12,7 @@ High-fidelity representation of the intermediate representation.
 
 ### Visualise CFGs
 Interactive graphs via React Flow — pan, zoom, and inspect nodes.
-![CFG Visualization Demo](assets/cfg-demo.gif)
+![CFG Visualisation Demo](assets/cfg-demo.gif)
 
 ### Compare Epochs
 Track changes across compilation stages with side-by-side highlighting.
@@ -137,7 +137,7 @@ Response: JSON (System status object)
 
 ## 7. Select Working Directory
 
-Tells the backend which directory to analyze.
+Tells the backend which directory to analyse.
 
 Path: ```POST /config/select-directory```
 
