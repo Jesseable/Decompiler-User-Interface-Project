@@ -118,25 +118,8 @@ Path: ```GET /cfg/{epoch}/{type}```
 
 Response: Record<string, GraphJSON> (Keyed by procedure name)
 
-## 5. Get Procedures with Line Mappings
 
-Retrieves the line numbers for procedures within the full IR files to support navigation.
-
-Path: ```GET /ir/{epoch}/procedures_with_lines```
-
-Response: Array<{ name: string, startLine: number, approxEndLine: number }>
-
-## 6. Get Full IR File
-
-Retrieves the entire IR file for an epoch (used in the Diff view).
-
-Path: ```GET /ir/{epoch}/{type}```
-
-Params: type is either before or after.
-
-Response: text/plain
-
-## 7. Get Procedure List (Simple)
+## 5. Get Procedure List (Simple)
 
 A simple list of procedure names for a specific epoch.
 
@@ -144,7 +127,7 @@ Path: ```GET /procedures/{epochName}```
 
 Response: string[]
 
-## 8. Get Analysis Status
+## 6. Get Analysis Status
 
 Checks if the backend is currently active and ready.
 
@@ -152,7 +135,7 @@ Path: ```GET /status```
 
 Response: JSON (System status object)
 
-## 9. Select Working Directory
+## 7. Select Working Directory
 
 Tells the backend which directory to analyze.
 
