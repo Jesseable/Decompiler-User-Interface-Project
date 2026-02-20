@@ -1,0 +1,18 @@
+
+; ========================================
+; Procedure: no_change_proc
+; ========================================
+
+proc no_change_proc(x: i32) -> i32
+entry:
+    t0 = x - 1
+    if t0 > 0 goto positive
+    goto negative
+
+positive:
+    t1 = t0 * 3
+    return t1
+
+negative:
+    return 0
+endproc

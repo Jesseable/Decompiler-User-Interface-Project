@@ -1,0 +1,32 @@
+; ========================================
+; Procedure: with_change
+; ========================================
+
+proc with_change(a: i32, b: i32) -> i32
+entry:
+    t0 = 0
+    t1 = 0
+    t2 = a
+    t3 = b
+    if t2 > t3 goto swap_ab
+    t4 = t2
+    goto sum_loop
+swap_ab:
+    t4 = t3
+sum_loop:
+    t5 = 0
+loop_start:
+    if t5 >= t4 goto loop_end
+    t6 = t5 * t5
+    t0 = t0 + t6
+    t5 = t5 + 1
+    goto loop_start
+loop_end:
+    t7 = t0 ^ b
+    t8 = t7 + a
+    t9 = t8 - t0
+    t10 = t9 * 3
+    t11 = t10 / (a + 1)
+    t12 = t11 % (b + 1)
+    return t12
+endproc

@@ -1,0 +1,10 @@
+; ========================================
+; Procedure: content_change
+; ========================================
+
+proc content_change(a: i32, b: i32) -> i32
+entry:
+    t0 = a + b
+    t1 = t0 * 2
+    return t1
+endproc

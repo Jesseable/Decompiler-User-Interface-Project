@@ -1,0 +1,29 @@
+; ========================================
+; Procedure: content_change
+; ========================================
+
+proc content_change(a: i32, b: i32) -> i32
+entry:
+    t0 = 0
+    t1 = 0
+    // Sum of squares up to min(a,b)
+    t2 = a
+    t3 = b
+    if t2 > t3 goto less_else
+    t4 = t2
+    goto sum_loop
+less_else:
+    t4 = t3
+sum_loop:
+    t5 = 0
+loop_start:
+    if t5 >= t4 goto loop_end
+    t6 = t5 * t5
+    t0 = t0 + t6
+    t5 = t5 + 1
+    goto loop_start
+loop_end:
+    // XOR with b to mix things up
+    t7 = t0 ^ b
+    return t7
+endproc

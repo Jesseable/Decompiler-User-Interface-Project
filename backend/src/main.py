@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response
 from pydantic import BaseModel
 from pathlib import Path
+from typing import Literal
 import json
 import hashlib
 
@@ -17,8 +18,9 @@ app.add_middleware(
 )
 
 # Global variable to store the selected folder
-selected_data_dir: Path = Path("test_data_1")  # default folder
+selected_data_dir: Path = Path("test_data_1")  # default folder 
 
+analysis_status: Literal["running", "completed"] = "completed"
 
 class DirectorySelection(BaseModel):
     directoryPath: str
@@ -27,11 +29,26 @@ class DirectorySelection(BaseModel):
 @app.post("/config/select-directory")
 async def select_directory(data: DirectorySelection):
     global selected_data_dir
+    global analysis_status
+
+    analysis_status = "running"
+
     dir_path = Path(data.directoryPath)
     if not dir_path.exists() or not dir_path.is_dir():
+        analysis_status = "completed"
         raise HTTPException(status_code=400, detail="Directory does not exist")
+
     selected_data_dir = dir_path
+
+    # Since your backend is file-based and not actually generating IR,
+    # we immediately mark it as completed.
+    analysis_status = "completed"
+
     return {"message": "Analysis triggered"}
+
+@app.get("/status")
+async def get_status():
+    return {"status": analysis_status}
 
 
 @app.get("/epochs")
@@ -57,11 +74,11 @@ def compute_hash(file_path: Path) -> str:
 async def get_procedures(epoch: str):
     """Return a list of procedure objects with name + before/after hashes."""
     epoch_dir = selected_data_dir / epoch
-    procedures_file = epoch_dir / "procedures_with_lines.json"
+    procedures_file = epoch_dir / "procedures.json"
 
     if not procedures_file.exists():
         raise HTTPException(
-            status_code=404, detail=f"procedures_with_lines.json not found for epoch {epoch}"
+            status_code=404, detail=f"procedures.json not found for epoch {epoch}"
         )
 
     with open(procedures_file) as f:
@@ -90,8 +107,8 @@ async def get_procedures(epoch: str):
     return result
 
 
-@app.get("/ir/{epoch}/procedures_with_lines")
-async def get_procedures_with_lines(epoch: str):
+@app.get("/ir/{epoch}/procedures")
+async def get_procedures(epoch: str):
     """Return same as /ir/{epoch}/procedures, for frontend backwards compatibility."""
     return await get_procedures(epoch)
 
@@ -135,12 +152,12 @@ async def get_procedures(epoch: str):
     Works for both /ir/{epoch}/procedures and /procedures/{epoch}.
     """
     epoch_dir = selected_data_dir / epoch
-    procedures_file = epoch_dir / "procedures_with_lines.json"
+    procedures_file = epoch_dir / "procedures.json"
 
     if not procedures_file.exists():
         raise HTTPException(
             status_code=404,
-            detail=f"procedures_with_lines.json not found for epoch {epoch}"
+            detail=f"procedures.json not found for epoch {epoch}"
         )
 
     with open(procedures_file, encoding="utf-8") as f:

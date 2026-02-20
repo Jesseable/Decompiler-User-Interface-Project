@@ -1,0 +1,23 @@
+; ========================================
+; Procedure: with_change
+; ========================================
+
+proc with_change(a: i32, b: i32) -> i32
+entry:
+    t0 = a + b
+    t1 = a - b
+    t2 = 1
+    t3 = 0
+loop_start:
+    if t3 >= 10 goto loop_end
+    t4 = t0 * t2
+    t2 = t2 + 1
+    t3 = t3 + 1
+    t0 = t4 ^ t3
+    goto loop_start
+loop_end:
+    t5 = t0 + b
+    t6 = t5 * 7
+    t7 = t6 - a
+    return t7
+endproc
