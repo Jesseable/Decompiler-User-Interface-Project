@@ -9,7 +9,6 @@ import hashlib
 
 app = FastAPI()
 
-# Allow frontend dev server to talk to backend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173"],
@@ -17,8 +16,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Global variable to store the selected folder
-selected_data_dir: Path = Path("test_data_1")  # default folder 
+selected_data_dir: Path = Path("test_data_1") 
 
 analysis_status: Literal["running", "completed"] = "completed"
 
@@ -40,8 +38,6 @@ async def select_directory(data: DirectorySelection):
 
     selected_data_dir = dir_path
 
-    # Since your backend is file-based and not actually generating IR,
-    # we immediately mark it as completed.
     analysis_status = "completed"
 
     return {"message": "Analysis triggered"}
@@ -67,9 +63,6 @@ def compute_hash(file_path: Path) -> str:
     return hashlib.sha256(file_path.read_bytes()).hexdigest()
 
 
-# ----------------------------
-# IR endpoints
-# ----------------------------
 @app.get("/ir/{epoch}/procedures")
 async def get_procedures(epoch: str):
     """Return a list of procedure objects with name + before/after hashes."""
@@ -86,15 +79,13 @@ async def get_procedures(epoch: str):
 
     result = []
     for proc in procedures_data:
-        # normalize to dict with 'name'
         if isinstance(proc, dict) and "name" in proc:
             proc_name = proc["name"]
         elif isinstance(proc, str):
             proc_name = proc
         else:
-            continue  # skip invalid entries
+            continue  
 
-        # compute IR file paths
         before_file = epoch_dir / "procedures" / proc_name / "before.ir"
         after_file = epoch_dir / "procedures" / proc_name / "after.ir"
 
@@ -163,7 +154,6 @@ async def get_procedures(epoch: str):
     with open(procedures_file, encoding="utf-8") as f:
         procedures_data = json.load(f)
 
-    # Normalize everything to strings
     result: list[str] = []
     for proc in procedures_data:
         if isinstance(proc, str):
