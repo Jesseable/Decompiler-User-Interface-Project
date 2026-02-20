@@ -6,11 +6,17 @@ It allows comparison of raw IR code and Control Flow Graphs (CFGs) during compil
 
 ## Features
 
-- View IR as plain text – High-fidelity representation.
+### View IR as plain text
+High-fidelity representation of the intermediate representation.
+![View IR Demo](assets/view-ir.gif)
 
-- Visualise CFGs – Interactive graphs via React Flow.
+### Visualise CFGs
+Interactive graphs via React Flow — pan, zoom, and inspect nodes.
+![CFG Visualization Demo](assets/cfg-demo.gif)
 
-- Compare Epochs – Track changes across compilation stages.
+### Compare Epochs
+Track changes across compilation stages with side-by-side highlighting.
+![Compare Epochs Demo](assets/compare-epochs.gif)
 
 
 ## Frontend
